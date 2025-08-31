@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Yummy Hotel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #fff;
+      --text-color: #222;
+      --card-bg: #f9f9f9;
+      --primary: #e65100;
+    }
+    [data-theme="dark"] {
+      --bg-color: #1c1c1c;
+      --text-color: #f0f0f0;
+      --card-bg: #333;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: var(--bg-color);
+      color: var(--text-color);
+    }
+    header {
+      background: var(--primary);
+      color: white;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.8rem;
+    }
+    nav a {
+      margin: 0 10px;
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .theme-toggle {
+      background: white;
+      color: var(--primary);
+      border: none;
+      padding: 6px 12px;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: var(--card-bg);
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: transform 0.2s;
+    }
+    .card:hover {
+      transform: scale(1.03);
+    }
+    .card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+    }
+    .card-body {
+      padding: 10px;
+    }
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+    .price {
+      color: var(--primary);
+      font-weight: bold;
+    }
+    .actions button {
+      margin-top: 10px;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .add-btn {
+      background: var(--primary);
+      color: white;
+    }
+    .buy-btn {
+      background: #4caf50;
+      color: white;
+      margin-left: 10px;
+    }
+    .section-title {
+      font-size: 1.5rem;
+      margin: 30px 0 10px;
+      color: var(--primary);
+    }
+    #cart-section, #offers-section, #contact-section {
+      margin-top: 50px;
+    }
+    #cart-list {
+      list-style: none;
+      padding: 0;
+    }
+    #cart-list li {
+      margin-bottom: 5px;
+      display: flex;
+      justify-content: space-between;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    #generate-btn {
+      margin-top: 20px;
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .offer-card {
+      background: #fff3e0;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body data-theme="light">
+  <header>
+    <h1>Yummy Hotel</h1>
+    <div>
+      <nav>
+        <a href="#home">Home</a>
+        <a href="#cart-section">Cart</a>
+        <a href="#offers-section">Offers</a>
+        <a href="#contact-section">Contact</a>
+      </nav>
+    </div>
+    <button class="theme-toggle" onclick="toggleTheme()">🌗 Toggle Theme</button>
+  </header>
+
+  <div class="container" id="home">
+    <h2 class="section-title">🍛 Indian Dishes</h2>
+    <div class="grid" id="food-grid">
+      <!-- Food cards will be inserted here -->
+    </div>
+
+    <h2 class="section-title">🍧 Sweets</h2>
+    <div class="grid">
+      <div class="card">
+        <img src="https://source.unsplash.com/400x300/?gulab-jamun" />
+        <div class="card-body">
+          <div class="card-title">Gulab Jamun</div>
+          <div class="price">₹80</div>
+          <div class="actions">
+            <button class="add-btn" onclick="addToCart('Gulab Jamun', 80)">Add</button>
+            <button class="buy-btn" onclick="buyNow('Gulab Jamun', 80)">Buy</button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <img src="https://source.unsplash.com/400x300/?rasgulla" />
+        <div class="card-body">
+          <div class="card-title">Rasgulla</div>
+          <div class="price">₹70</div>
+          <div class="actions">
+            <button class="add-btn" onclick="addToCart('Rasgulla', 70)">Add</button>
+            <button class="buy-btn" onclick="buyNow('Rasgulla', 70)">Buy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="section-title">🍔 Junk Food</h2>
+    <div class="grid">
+      <div class="card">
+        <img src="https://source.unsplash.com/400x300/?burger" />
+        <div class="card-body">
+          <div class="card-title">Burger</div>
+          <div class="price">₹99</div>
+          <div class="actions">
+            <button class="add-btn" onclick="addToCart('Burger', 99)">Add</button>
+            <button class="buy-btn" onclick="buyNow('Burger', 99)">Buy</button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <img src="https://source.unsplash.com/400x300/?french-fries" />
+        <div class="card-body">
+          <div class="card-title">French Fries</div>
+          <div class="price">₹60</div>
+          <div class="actions">
+            <button class="add-btn" onclick="addToCart('Fries', 60)">Add</button>
+            <button class="buy-btn" onclick="buyNow('Fries', 60)">Buy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container" id="cart-section">
+    <h2 class="section-title">🛒 Your Cart</h2>
+    <ul id="cart-list"></ul>
+    <p><strong>Total: ₹<span id="cart-total">0</span></strong></p>
+
+    <input type="text" id="cust-name" placeholder="Customer Name" />
+    <input type="text" id="cust-mobile" placeholder="Mobile Number" />
+    <button id="generate-btn" onclick="generatePDF()">Download Bill (PDF)</button>
+  </div>
+
+  <div class="container" id="offers-section">
+    <h2 class="section-title">🎁 Special Offers</h2>
+    <div class="offer-card">🔥 20% off on all Paneer dishes this weekend!</div>
+    <div class="offer-card">🍕 Buy 1 Get 1 Free on Pizza (Friday only!)</div>
+    <div class="offer-card">🎂 Free sweet dish on orders above ₹500</div>
+  </div>
+
+  <div class="container" id="contact-section">
+    <h2 class="section-title">📞 Contact Us</h2>
+    <p>Call us at <strong>+91 98765 43210</strong></p>
+    <p>Email: <strong>support@yummyhotel.com</strong></p>
+    <p>Delivery in 45 minutes. Pay online or on delivery.</p>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    const foodItems = [
+      { name: 'Paneer Butter Masala', price: 180, img: 'paneer' },
+      { name: 'Chicken Biryani', price: 220, img: 'biryani' },
+      { name: 'Masala Dosa', price: 120, img: 'dosa' },
+      { name: 'Butter Naan', price: 40, img: 'naan' },
+      { name: 'Veg Thali', price: 200, img: 'veg-thali' },
+      { name: 'Chicken Curry', price: 210, img: 'chicken-curry' },
+      { name: 'Rajma Chawal', price: 130, img: 'rajma' },
+      { name: 'Pav Bhaji', price: 100, img: 'pav-bhaji' },
+      { name: 'Dal Makhani', price: 160, img: 'dal' },
+      { name: 'Chole Bhature', price: 150, img: 'chole' }
+    ];
+    const grid = document.getElementById("food-grid");
+    const cart = [];
+    foodItems.forEach(item => {
+      const div = document.createElement("div");
+      div.className = "card";
+      div.innerHTML = `
+        <img src="https://source.unsplash.com/400x300/?${item.img}" />
+        <div class="card-body">
+          <div class="card-title">${item.name}</div>
+          <div class="price">₹${item.price}</div>
+          <div class="actions">
+            <button class="add-btn" onclick="addToCart('${item.name}', ${item.price})">Add</button>
+            <button class="buy-btn" onclick="buyNow('${item.name}', ${item.price})">Buy</button>
+          </div>
+        </div>`;
+      grid.appendChild(div);
+    });
+
+    function addToCart(name, price) {
+      cart.push({ name, price });
+      updateCart();
+    }
+
+    function buyNow(name, price) {
+      cart.push({ name, price });
+      updateCart();
+      document.getElementById("cart-section").scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function updateCart() {
+      const list = document.getElementById("cart-list");
+      list.innerHTML = '';
+      let total = 0;
+      cart.forEach(item => {
+        total += item.price;
+        const li = document.createElement("li");
+        li.innerHTML = `<span>${item.name}</span><span>₹${item.price}</span>`;
+        list.appendChild(li);
+      });
+      document.getElementById("cart-total").textContent = total;
+    }
+
+    async function generatePDF() {
+      const name = document.getElementById("cust-name").value.trim();
+      const mobile = document.getElementById("cust-mobile").value.trim();
+      if (!name || !mobile) return alert("Enter customer name and mobile.");
+      if (cart.length === 0) return alert("Cart is empty.");
+
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      doc.text("Yummy Hotel - Bill", 20, 20);
+      doc.text(`Name: ${name}`, 20, 30);
+      doc.text(`Mobile: ${mobile}`, 20, 40);
+      let y = 50, total = 0;
+      cart.forEach(item => {
+        doc.text(`${item.name} - ₹${item.price}`, 20, y);
+        y += 10;
+        total += item.price;
+      });
+      doc.text(`Total: ₹${total}`, 20, y + 10);
+      doc.save("YummyHotel_Bill.pdf");
+    }
+
+    function toggleTheme() {
+      const theme = document.body.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      document.body.setAttribute('data-theme', theme);
+    }
+  </script>
+</body>
+</html>
